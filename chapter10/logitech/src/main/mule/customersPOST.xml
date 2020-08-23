@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="customersPOSTSub_Flow" doc:id="231ae3fb-6088-46f2-84ad-1dfb64eeedcb" >
+	
+		<foreach doc:name="For Each" doc:id="c68fcfb7-7636-4213-898d-851a91ea919f" collection="#[payload]">
+			<choice doc:name="Choice" doc:id="a897b8b9-c430-4d21-8406-47857c9b8a95" >
+				<when expression="#[payload.department=='SALES']">
+					<flow-ref doc:name="Flow Reference" doc:id="d938a663-ef77-4676-8f63-b382a3be5f4f" name="SALESFLOW"/>
+				</when>
+				
+								<when expression="#[payload.department=='FIN']">
+					<flow-ref doc:name="Flow Reference" doc:id="8f06d54f-a3ad-4391-811f-c8c80b4dcd86" name="FINFLOW"/>
+				</when>
+				
+								<when expression="#[payload.department=='HR']">
+					<flow-ref doc:name="Flow Reference" doc:id="48ce91c1-0ff2-405f-a61c-fa3727b6b9d7" name="HRFLOW"/>
+				</when>
+				
+				<otherwise >
+					<flow-ref doc:name="Flow Reference" doc:id="8a7a4d15-0132-4577-81e3-149e481b9779" name="ADMINFLOW"/>
+				</otherwise>
+				
+				
+				
+			</choice>
+		</foreach>
+			</sub-flow>
+	<flow name="SALESFLOW" doc:id="993c184f-e6a6-43fb-ad4f-40b69293b42f" >
+		<logger level="INFO" doc:name="Logger" doc:id="7bcbc6b4-2404-4622-b499-b87bf91c9071" message="SALESFLOW"/>
+	</flow>
+	<flow name="HRFLOW" doc:id="53821356-7cbc-4020-9540-8a3f216ca848" >
+		<logger level="INFO" doc:name="Logger" doc:id="4526feda-bec3-4dbc-8f76-f99e77a560ec" message="HRFLOW"/>
+
+	</flow>
+	<flow name="ADMINFLOW" doc:id="b8a6def5-bd71-45b0-a8fc-cbb2e8a25880" >
+		<logger level="INFO" doc:name="Logger" doc:id="2ea19a5c-bc65-40d0-aea1-8e0143730ff8" message="ADMINFLOW"/>
+
+	</flow>
+	<flow name="FINFLOW" doc:id="79c8e80e-abb9-49ec-9898-39cf43ffca37" >
+		<logger level="INFO" doc:name="Logger" doc:id="6adab380-a92c-45ad-b76d-f0f201720d2a" message="FINFLOW"/>
+
+	</flow>
+
+</mule>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	
+	
+	<flow name="aircraftIDDELETEFlow" doc:id="3cfea4d9-03fe-491b-be87-8252ad668713" >
+		<logger level="INFO" doc:name="Logger" doc:id="70efaf1e-7161-44ff-977e-8390c7ce7d18" message="parsetemplate called"/>
+		<parse-template location="login/index.html" doc:name="Parse Template" doc:id="7e6d15e7-fd5a-4810-9575-999b83f55c65" />
+		
+	</flow>
+	
+	
+	
+</mule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="aircraftIDPUTFlow" doc:id="4c1bbdff-777b-4d0a-a1bb-0eac0b3482b4" >
+		<async doc:name="Async" doc:id="ceee7cc5-01b9-4d9b-9c42-414af7e01bfa" >
+			<logger level="INFO" doc:name="Logger" doc:id="11f7ffdb-f6e0-4a36-99e8-b979aa8104ca" message="#[payload]"/>
+		</async>
+	</flow>
+</mule>

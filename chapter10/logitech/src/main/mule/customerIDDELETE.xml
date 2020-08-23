@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="customerIDDELETESub_Flow" doc:id="a486f08e-68f6-410b-a032-9c8145ada00f" >
+		<logger level="INFO" doc:name="Logger" doc:id="966ccecb-d6d4-4066-8dd0-79b39f84b433" message="custiddel"/>
+	</sub-flow>
+</mule>

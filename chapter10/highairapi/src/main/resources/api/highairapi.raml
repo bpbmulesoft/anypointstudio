@@ -1,0 +1,74 @@
+#%RAML 1.0
+title: RestfulAPI_core
+version: v1
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/737cc872-99f4-4f80-99b8-c6fe09c1f7d7/ # baseUri:
+#  #  #  #  #  #  #  #  #  #    value: http://localhost:3000/{version}/api
+protocols: [  HTTP, HTTPS ]
+mediaType: [ application/json ]
+types:
+  aircraft:
+    properties:
+      id: string
+      name: string
+      make: string
+      brand: string[]
+
+traits:
+  FilterableByName:
+    queryParameters:
+      customerName?:
+        type: string
+  pageable:
+    queryParameters:
+      offset:
+        description: Skip over a number of elements by specifying an offset value for the query
+        type: integer
+        required: false
+        example: 20
+        default: 0
+      limit:
+        description: Limit the number of elements on the response
+        type: integer
+        required: false
+        example: 80
+        default: 10
+resourceTypes:
+  collection:
+    get:
+      is: [FilterableByName, pageable]
+      responses:
+        200:
+          body:
+            application/json: <<targetType>>[]
+    post:
+      body:
+        application/json: <<targetType>>
+      responses:
+        201:
+          headers:
+            Location: string
+          body:
+            application/json: <<targetType>>
+  member:
+    get:
+      responses:
+        200:
+          body:
+            application/json: <<memberType>>
+        404:
+    delete:
+      responses:
+        200:
+        404:
+        204:
+    put:
+      body:
+        application/json: <<memberType>>
+      responses:
+        200:
+        404:
+
+/aircraft:
+  type: { collection: { targetType: aircraft } }
+  /{make}:
+    type: { member: { memberType: aircraft } }

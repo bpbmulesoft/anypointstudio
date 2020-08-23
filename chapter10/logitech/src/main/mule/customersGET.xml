@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration1" doc:name="HTTP Request configuration" doc:id="d12a43af-6541-4175-85e1-5b7f1e72b8d8" >
+		<http:request-connection host="reqres.in" />
+	</http:request-config>
+	<sub-flow name="customersGETSub_Flow" doc:id="d2d81996-3f1e-4d94-95bc-4f3f3af9e34c" >
+		<http:request method="GET" doc:name="Request" doc:id="8a858509-7624-43d4-8223-ae732e6f69f3" config-ref="HTTP_Request_configuration1" path="/api/users?page=2"/>
+		<logger level="INFO" doc:name="Logger" doc:id="aa70a3a2-77d6-457a-9ad2-a71372b4088b" message="custget"/>
+	</sub-flow>
+</mule>

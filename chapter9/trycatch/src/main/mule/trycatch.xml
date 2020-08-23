@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="35d7c8f0-d5e6-467a-947f-8885137a94f5" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="6e029be6-7aee-4eb0-b3c2-db112a526ee2" >
+		<http:request-connection host="dummy.restapiexamplennnnnnnn.com/" />
+	</http:request-config>
+	<flow name="trycatchFlow" doc:id="01822c3f-a5b0-4b1a-a97f-c42fce8228ef" >
+		<http:listener doc:name="Listener" doc:id="d4af3c47-9392-43f4-9aeb-4b7d2a03d0b8" config-ref="HTTP_Listener_config" path="test"/>
+		<try doc:name="Try" doc:id="795889d9-ebfe-4fae-8650-c5ed31df6a92" >
+			<http:request method="GET" doc:name="Request" doc:id="204ace0c-9a5b-45b9-a968-2e3ae25651b2" config-ref="HTTP_Request_configuration" path="/api/v1/employees" />
+			<error-handler >
+				<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="e93f0944-2c28-4d2b-8208-8bf2c10daf6c" type="HTTP:CONNECTIVITY">
+					<parse-template doc:name="Parse Template" doc:id="f83a8f28-ee23-44e8-8374-935ab812db93" location="C:\c\fail_message.html"/>
+				</on-error-continue>
+			</error-handler>
+		</try>
+	</flow>
+</mule>

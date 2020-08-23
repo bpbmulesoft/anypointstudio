@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="647d60cd-1ab3-45c6-90c5-1d43cd27fecc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="7a458c00-b9f4-47f9-b0c7-63b510689c03" >
+		<http:request-connection host="dummy.restapiexample.com" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration1" doc:name="HTTP Request configuration" doc:id="70c4e346-2931-439f-908e-c46f0aeba82e" >
+		<http:request-connection host="dummy.restapiexample.com" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration2" doc:name="HTTP Request configuration" doc:id="cda5c12f-e39e-4123-ae35-a17ac4c3a5ef" >
+		<http:request-connection host="dummy.restapiexampleaaaaaaaaaaaa.com" />
+	</http:request-config>
+	<flow name="onerrorpropagateFlow" doc:id="4b6a2812-4ecd-4f27-9de5-62367e8be12a" >
+		<http:listener doc:name="Listener" doc:id="fb2a34bc-22a0-4c61-b507-17b6bd8c929f" config-ref="HTTP_Listener_config" path="test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="469e5c93-6d6e-467b-8727-cdd8f01205ab" message="calling flow ref 1"/>
+		<flow-ref doc:name="Flow Reference" doc:id="e30ae786-1e79-4c42-9c57-67f261f78c52" name="onerrorpropagateFlow1"/>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="609ccd6c-d5e6-4ef5-8e2d-fde3f102ecce" message="continuing main flow" />
+		<http:request method="GET" doc:name="Request" doc:id="5a4dde8b-1b80-48cc-b064-c48aee7b7476" config-ref="HTTP_Request_configuration" path="/api/v1/employees"/>
+		<logger level="INFO" doc:name="Logger" doc:id="21b364c0-dbc4-4f22-988d-317f221308f0" message="inside main block completion"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="fb46a4e0-83b0-4a75-850c-8852a6cb3bce" type="ANY">
+				<logger level="INFO" doc:name="Logger" doc:id="cb6fdd34-7a60-4595-bc90-28b220cbe2b1" message="reached main flow error block"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+	<flow name="onerrorpropagateFlow1" doc:id="e27acf51-88ea-45ec-ad08-c3aa9bbafece" >
+		<logger level="INFO" doc:name="Logger" doc:id="a74381df-9e74-4ac3-9bd8-4377288a2feb" message="inside flow ref 1"/>
+		<http:request method="GET" doc:name="Request" doc:id="bbf2c71c-9ce0-436f-ac83-89b67802581c" config-ref="HTTP_Request_configuration1" path="/api/v1/employee/23"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="02caddaa-516c-4417-be97-8f7578e9b14d" type="ANY">
+				<logger level="INFO" doc:name="Logger" doc:id="4d559f00-d9c0-49c9-8186-6229340baf06" message="inside flow ref 1 error block"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

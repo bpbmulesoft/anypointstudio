@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="eddbe5af-6457-4a61-8294-dd8fe30b7d97" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="2faa9fcd-e2e4-46c1-b3c9-523d28d033d6" >
+		<http:request-connection host="dummy.restapiexampleaaaaaaaaaaaaaa.com" />
+	</http:request-config>
+	<flow name="raiseerrorFlow" doc:id="a07038e1-bef7-4c7d-96bd-f6e2fd48d481" >
+		<http:listener doc:name="Listener" doc:id="bfff0ef9-2950-4306-afa0-2b3734820be6" config-ref="HTTP_Listener_config" path="test"/>
+		<choice doc:name="Choice" doc:id="1dd52a7e-1729-4b6a-a7da-f498dc0290f1" >
+			<when expression="#[message.attributes.queryParams.'city' == null]">
+				<raise-error doc:name="Raise error" doc:id="302e73e5-b74a-4265-a24a-3e4fa50f6fea" type="LOCATION:UNDECLARED" description="CITY PARAMETER MISSING"/>
+				<logger level="INFO" doc:name="Logger" doc:id="40c80503-86aa-4533-a5b7-d55ea5f14935" message="ERROR"/>
+			</when>
+			<otherwise >
+				<http:request method="GET" doc:name="Request" doc:id="9166aa51-0c18-4eaf-8911-a3725dc20990" config-ref="HTTP_Request_configuration" path="/api/v1/employees" />
+				<raise-error doc:name="Raise error" doc:id="7288e42e-df13-426b-aa42-96c9c10f6caa" type="SERVER:REFUSED" description="CONNETION REFUSED"/>
+			</otherwise>
+		</choice>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="fe6d8f98-28b9-4224-8808-b87d23d9769d" type="ANY">
+				<raise-error doc:name="Raise error" doc:id="a87502d6-804b-4d02-87a8-f16132e41768" type="TEST:TEST" description="TEST:TEST"/>
+			</on-error-continue>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0724a415-9a90-4a27-93d2-5fbd0f431c2f" type="ANY">
+				<raise-error doc:name="Raise error" doc:id="5bb09310-f2c2-41e5-b776-01ad9a149fc4" type="TEST:TEST1" description="TEST:TEST1" />
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+	<error-handler name="raiseerrorError_Handler" doc:id="e59b45ba-6ad9-4761-87ff-c3a9772ec657" >
+		<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="ccd2508c-ae6c-49a0-8451-b5f3530eecc6" type="ANY"/>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="2dffd03d-6018-403c-8b16-2c7800333ac1" type="ANY"/>
+	</error-handler>
+</mule>

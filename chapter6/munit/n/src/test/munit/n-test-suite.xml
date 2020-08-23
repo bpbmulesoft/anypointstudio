@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="n-test-suite.xml" />
+	<munit:test name="n-test-suite-nFlowTest" doc:id="a4fe50c6-e1a9-4e4c-b64f-1dfbeb49984e" description="Test" ignore="true">
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy" doc:id="dbfc8381-ae63-4d06-ad61-862b22d6dc6b" processor="http:listener">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Listener" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="3ee91b3b-cf4d-4095-ad2a-2c983c27bb37" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="HTTP_Listener_config" attributeName="config-ref" />
+					<munit-tools:with-attribute whereValue="test" attributeName="path" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert-that doc:name="Assert that" doc:id="cf989794-402b-4b25-a288-18134eb86281" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert-that doc:name="Assert that" doc:id="17c4a86f-bc9c-48f0-9c9f-71d24258fcf1" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="ef984edc-3611-4b06-afa0-b649402f9bc1"> 
+			
+			 <munit:payload value="#['TEST']" encoding="UTF-16" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to nFlow" doc:id="34f8fe50-b4b4-4cff-9049-eb23349a02d1" name="nFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:fail doc:name="Fail" doc:id="cece4b48-ef44-44aa-939c-7511fe32de2e" />
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="10a40474-68ad-4952-be66-af16dfd31e14" actual="#[payload]" expected="TEST"/>
+			
+		</munit:validation>
+	</munit:test>
+	<munit:test name="n-test-suiteTest" doc:id="a23a4a67-0dd9-414b-bbf5-b2edf0a34a63" >
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="b53192df-1c3b-4d17-8a73-996a681fc916" >
+				<munit:payload value="#['mmmmmmmmmm']" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow Reference" doc:id="8cc09fca-45fd-40aa-9894-a1501bb70873" name="nFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="688dfb0a-cea6-4d7d-be97-9604c515dca2" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+			<munit-tools:dequeue doc:name="Dequeue" doc:id="8ca39feb-8465-4c31-96d7-6ef8a596bfb5" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

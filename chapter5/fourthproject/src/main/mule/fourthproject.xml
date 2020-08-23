@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="2fd242ba-d454-44c6-826d-bb2c0bd43561" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	
+	<flow name="fourthprojectFlow" doc:id="c3f65b81-7ca3-4360-900c-a184ff441734" >
+		<http:listener doc:name="Listener" doc:id="d55a1b8c-478c-4e06-a1a6-8166272c550c" config-ref="HTTP_Listener_config" path="test" allowedMethods="post"/>
+	
+		<foreach doc:name="For Each" doc:id="2b717e2a-91cb-4b94-9ccd-36f03aaeae75" collection="#[payload]">
+			<choice doc:name="Choice" doc:id="2d01f265-e448-4ecd-8ded-34b905975672" >
+				<when expression="#[payload.department=='SALES']">
+					<flow-ref doc:name="Flow Reference" doc:id="648c2ccd-a09f-4927-893a-0d04a1ceb7d4" name="SALESFLOW"/>
+				</when>
+				
+								<when expression="#[payload.department=='FIN']">
+					<flow-ref doc:name="Flow Reference" doc:id="ad36fabb-9c4b-493e-bdc4-f507594eb441" name="FINFLOW"/>
+				</when>
+				
+								<when expression="#[payload.department=='HR']">
+					<flow-ref doc:name="Flow Reference" doc:id="e383d520-c26d-4a73-be58-8aa357f93291" name="HRFLOW"/>
+				</when>
+				
+				<otherwise >
+					<flow-ref doc:name="Flow Reference" doc:id="4fcfb9e3-c3c5-402b-8459-cd2a90fad46b" name="ADMINFLOW"/>
+				</otherwise>
+				
+				
+				
+			</choice>
+		</foreach>
+	</flow>
+	<sub-flow name="SALESFLOW" doc:id="7c7e492d-bebb-4d5e-ac61-aa1e10e3aeea" >
+		<logger level="INFO" doc:name="Logger" doc:id="26f1d687-ea14-4331-8d1a-5832b7d3a727" message="salesflow" />
+	</sub-flow>
+	<flow name="HRFLOW" doc:id="3e4662b5-b12c-4ed4-b39d-e0f520f12719" >
+		<logger level="INFO" doc:name="Logger" doc:id="74055a34-49c7-499a-9f54-2ae1935fc36b" message="hrflow"/>
+	</flow>
+	<flow name="ADMINFLOW" doc:id="37396f38-83b3-42ba-b720-f2156f1bf0b4" >
+		<logger level="INFO" doc:name="Logger" doc:id="53275629-56ad-45f3-b269-f16cde62d79d" message="adminflow"/>
+	</flow>
+	<flow name="FINFLOW" doc:id="be7f3a64-ac4a-487b-b54a-c64dffa5e429" >
+		<logger level="INFO" doc:name="Logger" doc:id="57e02f60-45b5-40af-9695-ba9d78fada2c" message="finflow"/>
+	</flow>
+</mule>

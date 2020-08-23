@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="25de71f8-f5bc-491b-93c0-3686cb8508e5" basePath="sapinvoices" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mysecondprojectFlow" doc:id="21603635-9988-41db-9eba-238ce6a780b8" >
+		<http:listener doc:name="Listener" doc:id="d258c926-e4ca-4514-97d1-39c5840a7e04" config-ref="HTTP_Listener_config" path="customerinvoices"/>
+		<set-payload value="#['SAp INVOICEs GENERATED']" doc:name="Set Payload" doc:id="6771cc0f-7fd9-42bc-856e-8c0c21c09e7d" />
+		<logger level="INFO" doc:name="Logger" doc:id="4f852348-ae2d-4723-bd46-e0ae9df97f73" message="INVOICES"/>
+	</flow>
+</mule>

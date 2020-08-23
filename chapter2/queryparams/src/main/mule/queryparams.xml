@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="25bd2dc7-c578-4469-a032-85991924ecd9" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="queryparamsFlow" doc:id="545861c8-4a52-429b-a3f3-c1334caf19e1" >
+		<http:listener doc:name="Listener" doc:id="9bc5573c-3261-45a8-9c7e-e3f9dde7f775" config-ref="HTTP_Listener_config" path="test"/>
+		<choice doc:name="Choice" doc:id="d4c7b497-490c-4bb6-b0d6-fd2dfd69b2b1" >
+			<when expression="message.attributes.queryParams.city=='london'">
+				<logger level="INFO" doc:name="Logger" doc:id="a5746ccb-ad63-4a09-8e8d-72e57ea47ad8" message="city entered #[message.attributes.queryParams.city]"/>
+			</when>
+			<when expression="message.attributes.queryParams.city=='Newyork'">
+				<logger level="INFO" doc:name="Logger" doc:id="0ef03795-ba77-42e5-aadf-f1da50f55a1a" message="city entered #[message.attributes.queryParams.city]"/>
+			</when>
+			<when expression="message.attributes.queryParams.city=='Singapore'">
+				<logger level="INFO" doc:name="Logger" doc:id="6b7b5320-64a9-46dd-9c94-cfb70da755b3" message="city entered #[message.attributes.queryParams.city]"/>
+			</when>
+			
+		</choice>
+	</flow>
+</mule>

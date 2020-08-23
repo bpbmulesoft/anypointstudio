@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="cba28b0a-12c5-410f-9137-940491a2a3c3" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="scopeprojectFlow" doc:id="09e485f5-a993-41d8-8e77-0b482076a823" >
+		<http:listener doc:name="Listener" doc:id="4b40c114-1b80-4393-8dcd-975f942b096d" config-ref="HTTP_Listener_config" path="test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="b205308a-338a-48cd-8785-c6caf386d823" message="FROM MAINFLOW"/>
+		<flow-ref doc:name="Flow Reference" doc:id="3193a303-3bb7-4193-b306-56c5be9cda79" name="scopeprojectFlow1"/>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="95a6ec6e-3339-4e57-ba31-6e85be78011c" message="FROM MAINFLOW" />
+		<logger level="INFO" doc:name="Copy_of_Copy_of_Logger" doc:id="172aa0da-f734-4823-9063-63d5c1aef9d4" message="FROM MAINFLOW" />
+		<logger level="INFO" doc:name="Copy_of_Copy_of_Copy_of_Logger" doc:id="54d4bdeb-f17d-4084-a460-3567f6ce5f18" message="FROM MAINFLOW" />
+	</flow>
+	<flow name="scopeprojectFlow1" doc:id="5f8b55fd-5866-4c3b-84b7-bdc97c14f03a" >
+		<async doc:name="Async" doc:id="c2a373f8-0508-4f42-8508-a8a5adf1b61f" >
+			<logger level="INFO" doc:name="Logger" doc:id="60264a0b-d1ae-445c-8833-df0e7c423eca" message="FROM ASYNC"/>
+		</async>
+	</flow>
+</mule>

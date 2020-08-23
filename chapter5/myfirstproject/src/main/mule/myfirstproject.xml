@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+
+
+
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="75301a7c-e42a-4dc7-8483-a8fb6c5269a1" >
+	
+	
+		<http:request-connection host="localhost" port="8088" />
+	</http:request-config>
+	<flow name="myfirstprojectFlow" doc:id="ad2e4d2e-494c-4a89-a9de-9b36f87c78d9" >
+		<scheduler doc:name="Scheduler" doc:id="b6bc95a9-1d2f-461a-81fa-7175fb724232" >
+			<scheduling-strategy >
+				<fixed-frequency/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-variable value="TEST===============" doc:name="Set Variable" doc:id="46013e32-c0c6-4a42-96a1-e88e0e09663f" variableName="first"/>
+		<logger level="INFO" doc:name="Logger" doc:id="8ce4785d-d515-4101-bf07-ffa3424312e3" message="#[vars.first]"/>
+	</flow>
+
+
+</mule>

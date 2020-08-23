@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7f4e98ee-ebef-41c4-93cb-18f5703b9c01" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mythirdprojectFlow" doc:id="a4b65d12-7858-47cf-916e-54cbc5dcb713" >
+		<http:listener doc:name="Listener" doc:id="131dcb10-2e35-4c44-99b8-2ae3a1905b0b" config-ref="HTTP_Listener_config" path="test" allowedMethods="post"/>
+		<logger level="INFO" doc:name="Logger" doc:id="56655c0e-b7b5-4752-99b7-8d6d2c785284" message="#[payload]"/>
+		<set-variable value="#[attributes.queryParams.city]" doc:name="Set Variable" doc:id="724ba3a3-93bf-4066-aeb2-22dd041bcdec" variableName="city"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="cfe6a54d-7aa3-414d-9bf1-53ae7c1b14ff" />
+		<set-variable value="1234" doc:name="Set Variable" doc:id="17fb202a-2749-40b1-8d59-ff62c89c812e" variableName="id"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2f3402f8-cdb3-43a0-9ad8-8b290889779f" message="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="4b7eac2f-ed12-4c7c-abfa-a6051726d8f8" message="#[vars.id]"/>
+	</flow>
+</mule>

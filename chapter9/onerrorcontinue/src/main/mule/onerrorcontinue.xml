@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="a864c125-04c9-482f-a917-29c096dffaa9" >
+		<http:request-connection host="dummy.restapiexample.com" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration1" doc:name="HTTP Request configuration" doc:id="00eecfa4-1bf8-4019-85d8-232c18756e7a" >
+		<http:request-connection host="dummy.restapiexampleaaaaaaaaaa.com" />
+	</http:request-config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="212c4003-7798-49bb-a1c5-5e2af17126a8" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="onerrorcontinueFlow" doc:id="cac2fbd1-a9c5-4fcd-9132-e309c0974026" >
+		<http:listener doc:name="Listener" doc:id="cdd4ebd6-705e-4969-ba33-81bd2a76eba4" config-ref="HTTP_Listener_config" path="test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="91bd6f2f-496a-4583-98b9-ae80d7e2ab26" message="STARTING MAIN FLOW !"/>
+		<flow-ref doc:name="Flow Reference" doc:id="ec20b5cf-2873-4308-8c24-d52bb9158060" name="onerrorcontinueFlow1"/>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="89565568-cc62-4c3b-9ab1-7ac4f0f607ec" message="SECOND FLOW CALLED" />
+		<flow-ref doc:name="Copy_of_Flow Reference" doc:id="592aa867-039c-4279-ab59-ae34dfd04be4" name="onerrorcontinueFlow2" />
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="65798b48-d654-4ce4-bbdf-30bfaffac381" message="ANOTHER FLOW CALLED" />
+		<parse-template doc:name="Parse Template" doc:id="df12f2ea-0119-4369-a038-949c5b47a4da" location="C:\c\pass_message.html"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="d76122a2-88da-4747-9be1-71d817dcaca5" >
+				<logger level="INFO" doc:name="Logger" doc:id="0e12ad7f-9db3-4e8e-b850-2f5336c53559" message="INSIDE MAIN FLOW"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="onerrorcontinueFlow1" doc:id="e46b539d-9af6-4720-b211-9bf10305619e" >
+		<http:request method="GET" doc:name="Request" doc:id="1832b33d-5757-414c-a45b-255d29202205" config-ref="HTTP_Request_configuration" path="/api/v1/employee/23"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="1c3088c9-ed2c-462a-ace0-f501496a26c9" type="ANY">
+				<logger level="INFO" doc:name="Logger" doc:id="df119ed4-b660-4db6-8f79-b2df76461ad7" message="INSIDE FLOW 1 ERROR"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="onerrorcontinueFlow2" doc:id="6efc6237-58a8-473d-b5ca-16a1e62ca044" >
+		<http:request method="GET" doc:name="Request" doc:id="3d413ccd-3a99-46f7-bb52-5c9e0afa554f" config-ref="HTTP_Request_configuration1" path="/api/v1/employee/23"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="371ee498-8e7f-4821-96b7-e7b7f06011ac" >
+				<logger level="INFO" doc:name="Logger" doc:id="fdec2d2a-65f0-40ab-9daf-1a9bfbc72c57" message="INSIDE FLOW 2 ERROR"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	
+</mule>

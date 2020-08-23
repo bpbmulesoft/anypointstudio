@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="e3fc746a-2fd2-41a2-a9b5-7a0527d21071" >
+		<file:connection workingDir="C:\file1" />
+	</file:config>
+	<flow name="fileconnectorFlow" doc:id="76b2184e-f56b-4578-a9d1-a2cfc1d9ef86" >
+		<file:listener doc:name="On New or Updated File" doc:id="cba5c596-e981-459b-883d-d8a559bc3b46" config-ref="File_Config" directory="C:\file2">
+			<scheduling-strategy >
+				<fixed-frequency frequency="10000"/>
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="1385bf74-fb4c-465d-b014-4f7b06b67ebf" message="#[payload]"/>
+	</flow>
+</mule>
